@@ -10,6 +10,11 @@
 ### Leadership Structure
 ### Decision-making
 ### Regular Meeting Time and Location
+We will meet with each other regularly to discuss progress on the project
+and to seek from one another if needed. This time will also be set to ensure 
+that we progress on the project.
+
+
 ### Communication
 If there is an issue or conflict we will discuss it directly but calmly, 
 so we can reach a peaceful solution that works for everyone. We will, to the best of our ability, 
@@ -37,6 +42,6 @@ about why and get something figured out as a group.
 
 ## Signatures
 Clodagh
-
+Mark Belmonte
 
 Sadie Lewis
