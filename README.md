@@ -49,7 +49,7 @@ even personal scheduling conflicts prevent being at a meeting.
 
 ## Personal Accountability
 If we fall behind in some aspect of the project we will communicate with our team 
-about why and get something figured out as a group. 
+about why and work with the team to determine workable solution. 
 
 ## Breach of Contract
 
@@ -61,3 +61,5 @@ Clodagh Nangle
 Mark Belmonte
 
 Sadie Lewis
+
+Logan O'Roark
