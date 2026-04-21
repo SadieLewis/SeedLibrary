@@ -1,0 +1,37 @@
+@page
+@model SeedLibrary.Pages.SpotlightSeeds
+
+@{
+    ViewData["Title"] = "Seed Spotlight";
+}
+
+<link rel="stylesheet" type="text/css" href="css/spotlight.css">
+
+<div class="row mb-auto">
+    <div class="row  mb-4">
+        <div class="col-sm-6">
+            <h2>Seed Spotlight</h2>
+            <div class="borderedcontainer">
+                <p>
+
+                        SPOTLIGHT SEED CAROUSEL TO GO IN HERE
+                </p>
+
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <h3>In Season Seeds</h3>
+            <div class="borderedcontainer" id="inseasonsquare">
+                <p>
+                        IN SEASON SEED INFORMATION TO GO HERE
+
+                </p>
+            </div>
+            <div class="row">
+                <button type="button" class="webbutton" id="seedinvbut" onclick="location.href='/Seeds'">View Seed Inventory</button>
+                <button type="button" class="webbutton"  onclick="location.href='/Index'">Return to Homepage</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,22 +17,31 @@
     border-color:   #6c9931;
 }
 
-#content{
-    padding-right: 3vh;
-    border-top: 3vh solid #F46E15;
+.row{
     padding: 2vh;
-    margin-right: 2vh;
-
 }
 
-#imagecar{
-    border: 5px solid #F46E15;;
+.borderedcontainer{
+    border: 5px solid #F46E15;
     border-radius: 10px;
     padding: 2vh;
 }
 
+#inseasonsquare{
+    border-color: #EC373C;
+}
+
 h2 {
-    padding: 3vh;
+    padding: 2vh;
     font-family: 'Lato-Bold'; 
-    font-size: 60px;
+    font-size: 50px;
+    padding-right: 3vh;
+    border-bottom: 3vh solid #F46E15;
+}
+
+h3 {
+    padding: 2vh;
+    font-family: 'Lato-Bold'; 
+    font-size: 50px;
+    border-bottom: 3vh solid #EC373C;
 }
