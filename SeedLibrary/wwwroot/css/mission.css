@@ -16,3 +16,21 @@
     background-color:  #8BC441;
     border-color:   #6c9931;
 }
+
+#content{
+    padding-right: 3vh;
+    border-top: 3vh solid #F46E15;
+    padding: 2vh;
+    margin-right: 2vh;
+
+}
+
+#imagecar{
+    border: 5px solid #F46E15;;
+    border-radius: 10px;
+    padding: 2vh;
+}
+
+h2 {
+    padding: 3vh;
+}
