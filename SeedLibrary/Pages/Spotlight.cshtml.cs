@@ -9,13 +9,55 @@ using SeedLibrary.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Dynamic;
+using System.Runtime.CompilerServices;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
 
-namespace SeedLibrary.Pages;
+namespace SeedLibrary.Pages.SpotlightSeeds;
 
-public class SpotlightSeeds : PageModel
+public class SpotlightSeedsModel : PageModel
 {
-    public void OnGet()
-    {
+    private readonly SeedLibrary.Data.SchoolContext _context;
+    private readonly IConfiguration Configuration;
+        public SpotlightSeedsModel(SchoolContext context, IConfiguration configuration)
+        {
+            _context = context;
+            Configuration = configuration;
+        }
+        public string NameSort { get; set; }
+        public string YearSort { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+        public PaginatedList<Seed> Seeds { get;set; } = default!;
+        public List<int> SelectedSeeds { get; set; } = new();
 
-    }
+        public async Task OnGetAsync(string sortOrder,
+            string currentFilter, string searchString, int? pageIndex)
+        {
+            CurrentSort = sortOrder;
+            NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            YearSort = sortOrder == "Year" ? "year_desc" : "Year";
+            if (searchString != null)
+            {
+                pageIndex = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            CurrentFilter = searchString;
+
+            IQueryable<Seed> seedsIQ = from s in _context.Seeds select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                seedsIQ = seedsIQ.Where(s => s.Name.Contains(searchString)
+                                    || s.Variety.Contains(searchString));
+            }
+
+            var pageSize = Configuration.GetValue("PageSize", 5);
+            Seeds = await PaginatedList<Seed>.CreateAsync(seedsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
+        }
+    
 }
