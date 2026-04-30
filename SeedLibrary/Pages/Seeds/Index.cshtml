@@ -19,7 +19,7 @@
         </p>
     </div>
 </form>
-<table class="table table-success">
+<table class="table">
     <p><b>Sort By:</b></p>
     <button type="button" class="btn btn-link"> 
         <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
@@ -31,12 +31,6 @@
         <a asp-page="./Index" asp-route-sortOrder="@Model.YearSort" 
             asp-route-currentFilter="@Model.CurrentFilter">
             @Html.DisplayNameFor(model => model.Seeds[0].Year)
-        </a> 
-    </button>
-    <button type="button" class="btn btn-link">
-        <a asp-page="./Index" asp-route-sortOrder="@Model.VarietySort" 
-            asp-route-currentFilter="@Model.CurrentFilter">
-            @Html.DisplayNameFor(model => model.Seeds[0].Variety)
         </a> 
     </button>
     <thead>
@@ -56,9 +50,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Seeds[0].Count)
             </th>
-            <th>
+            <th></th>
         </tr>
-        </div>
     </thead>
     <tbody>
 @foreach (var item in Model.Seeds) {
