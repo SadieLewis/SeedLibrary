@@ -22,7 +22,7 @@
 }
 
 .borderedcontainer{
-    border: 5px solid #F46E15;
+    border: 5px solid #337ab7;
     padding: 2vh;
 }
 
@@ -34,7 +34,7 @@
 }
 
 #inseasonsquare{
-    border-color: #EC373C;
+    border-color: #AAD373;
 }
 
 h2 {
@@ -49,10 +49,31 @@ h3 {
     padding: 2vh;
     font-family: 'Lato-Bold'; 
     font-size: 50px;
-    border-bottom: 3vh solid #EC373C;
+    border-bottom: 3vh solid #F46E15;
 }
 
 button{
     padding-top: 1vh;
     padding-bottom:1vh;
+}
+
+.card{
+    border-radius: 0%;
+}
+
+.btn-success{
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #028DD0;
+    --bs-btn-border-color: #028DD0;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #02538B;
+    --bs-btn-hover-border-color: #02538B;
+    --bs-btn-focus-shadow-rgb: 60, 153, 110;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #02538B;
+    --bs-btn-active-border-color: #02538B;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #028DD0;
+    --bs-btn-disabled-border-color: #028DD0;
 }
