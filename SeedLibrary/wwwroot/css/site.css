@@ -31,7 +31,7 @@ body {
 }
 
 .search-btn {
-    background-color: #028DD0;
+    background-color: #005117;
     color: white;
     border: 2px solid #8BC441;
     padding: 6px 12px;
@@ -41,8 +41,16 @@ body {
 }
 
 .search-btn:hover {
-    background-color: #02538B;
+    background-color: #AAD373;
     color: white;
+}
+
+#backto{
+  color:white;
+}
+
+#backto:hover{
+  color:black;
 }
 
 h1{

@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SeedLibrary.Models;
 
 namespace SeedLibrary.Data
 {
-    public class SeedContext : DbContext
+    public class SeedContext : IdentityDbContext
     {
         public SeedContext (DbContextOptions<SeedContext> options)
             : base(options)
@@ -15,13 +13,10 @@ namespace SeedLibrary.Data
         }
 
         public DbSet<Seed> Seeds{get;set;}
-        public DbSet<Enrollment> Enrollments { get; set; }
-        public DbSet<Course> Courses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Course>().ToTable("Course");
-            modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Seed>().ToTable("Seed");
         }
     }
