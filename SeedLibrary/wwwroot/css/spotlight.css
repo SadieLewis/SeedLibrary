@@ -4,7 +4,14 @@
     border: 1px solid #dc6414;
     border-radius: 5px;
     font-size: 1vw;
-    margin: 5px
+    margin: 5px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.webbutton:hover{
+    background-color: #863905;
+    transform: scale(1.05);
 }
 
 #seedspotbut{
@@ -17,6 +24,10 @@
     border-color:   #6c9931;
 }
 
+#seedinvbut:hover{
+    background-color: #005117;
+}
+
 .row{
     padding: 2vh;
 }
@@ -27,7 +38,7 @@
 }
 
 .cardspotlight{
-    border: 5px solid #FDB717;
+    border: 5px solid #8BC441;
     padding: 2vh;
     margin-bottom: 2vh;
     margin-right:2vh;
@@ -50,6 +61,17 @@ h3 {
     font-family: 'Lato-Bold'; 
     font-size: 50px;
     border-bottom: 3vh solid #F46E15;
+}
+
+#info{
+    color:white;
+    background-color: #005117;
+    text-decoration: none;
+}
+
+#info:hover{
+    color: white;
+    background-color: #AAD373;
 }
 
 button{

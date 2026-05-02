@@ -18,7 +18,7 @@
 <div class="row mb-auto">
     <div class="row  mb-4">
         <div class="col-sm-6">
-            <h2>Seed Spotlight</h2>
+            <h2 style = "border-bottom: 3vh solid #337ab7">Seed Spotlight</h2>
             <div class="borderedcontainer">
                 <div style="overflow-y:scroll; height:450px">
                 <!-- TEMPORARY - NEED TO CHANGE TO TAKE ONLY SEED SPOTLIGHT ONCE DATABASE FINALISED -->
@@ -28,11 +28,11 @@
                     <!-- TEMPORARY - NEEDS TO BE SEED IMAGE ONCE ADDED TO THE DATABASE -->
                     <div class="row">
                         <div class = "col-sm-4">
-                            <img src="/images/Flower.png" alt="Seed Library" style= "width: 80px; height: 80px" />
+                            <img src="/images/Vegetable.png" alt="Seed Library" style= "width: 80px; height: 80px" />
                         </div>
                         <div class="col-sm-8">
                             <p>@Model.Seeds[i].Variety @Model.Seeds[i].Name<p>
-                            <a asp-page="./Seeds/Details" asp-route-id="@Model.Seeds[i].ID">More Information</a>
+                            <a asp-page="./Seeds/Details" id = "info" asp-route-id="@Model.Seeds[i].ID">More Information</a>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <h3>In Season Seeds</h3>
+            <h3 style = "border-bottom: 3vh solid #AAD373">In Season Seeds</h3>
             <div class="borderedcontainer" id="inseasonsquare">
                 <!-- TEMPORARY - NEED TO TAKE FROM SEED MONTH AUTHOMATICALLY -->
                 @for (int i = 0; i < Model.Seeds.Count; i++)
@@ -61,7 +61,7 @@
                 <p>If you want to get started with your garden this month the seeds above are a good option!</p>
                 <p>To see the full variety of seeds in our catalogue, please view our inventory.</p>
                 <button type="button" class="webbutton" id="seedinvbut" onclick="location.href='/Seeds'">View Seed Inventory</button>
-                <button type="button" class="webbutton"  onclick="location.href='/Index'">Return to Homepage</button>
+                <button type="button" class="webbutton" id = "returnhome" onclick="location.href='/Index'">Return to Homepage</button>
             </div>
         </div>
     </div>
