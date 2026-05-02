@@ -4,7 +4,14 @@
     border: 1px solid #dc6414;
     border-radius: 5px;
     font-size: 1vw;
-    margin: 5px
+    margin: 5px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.webbutton:hover{
+    background-color: #863905;
+    transform: scale(1.05);
 }
 
 #seedspotbut{
@@ -12,9 +19,17 @@
     border-color:  #337ab7;
 }
 
+#seedspotbut:hover{
+    background-color: #02538B;
+}
+
 #seedinvbut{
     background-color:  #8BC441;
     border-color:   #6c9931;
+}
+
+#seedinvbut:hover{
+    background-color: #005117;
 }
 
 #content{
