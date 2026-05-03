@@ -32,15 +32,14 @@ else
     app.UseMigrationsEndPoint();
 }
 
-/*using (var scope = app.Services.CreateScope())
-//{
+using (var scope = app.Services.CreateScope())
+{
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<SeedContext>();
     context.Database.EnsureCreated();
-    //DbInitializer.Initialize(context);
+    DbInitializer.Initialize(context);
 }
-*/
 
 app.UseHttpsRedirection();
 

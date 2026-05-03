@@ -25,6 +25,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.SeedPacket[0].Variety.CommonName)
             </th>
+             <th>
+                Source
+            </th>
+            <th>
+                Start Month
+            </th>
+            <th>
+                End Month
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -41,7 +50,25 @@
                 @Html.DisplayFor(modelItem => item.Variety.VarietyName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Variety.CommonName)
+                @Html.DisplayFor(modelItem => item.Variety.CommonName.Name)
+            </td>
+            <td>
+                @foreach (var donation in item.Donations)
+                {
+                    <div>@donation.Source.SourceName</div>
+                }
+            </td>
+            <td>
+                @foreach (var growing in item.Growings)
+                {
+                    <div>@growing.PlantingDate.StartMonth</div>
+                }
+            </td>
+            <td>
+                @foreach (var growing in item.Growings)
+                {
+                    <div>@growing.PlantingDate.EndMonth</div>
+                }
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.SeedId">Edit</a> |
