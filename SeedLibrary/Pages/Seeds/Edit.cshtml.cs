@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SeedLibrary.Data;
 using SeedLibrary.Models;
 
-namespace SeedLibrary.Pages.Seeds
+namespace SeedLibrary.Pages_Seeds
 {
     public class EditModel : PageModel
     {
@@ -21,48 +21,58 @@ namespace SeedLibrary.Pages.Seeds
         }
 
         [BindProperty]
-        public Seed Seed { get; set; } = default!;
+        public SeedPacket SeedPacket { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync(int? id)
-    {
-        if (id == null)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            return NotFound();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var seedpacket =  await _context.SeedPackets.FirstOrDefaultAsync(m => m.SeedId == id);
+            if (seedpacket == null)
+            {
+                return NotFound();
+            }
+            SeedPacket = seedpacket;
+           ViewData["VarietyName"] = new SelectList(_context.Varieties, "VarietyName", "VarietyName");
+            return Page();
         }
 
-        Seed = await _context.Seeds.FindAsync(id);
-
-        if (Seed == null)
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more information, see https://aka.ms/RazorPagesCRUD.
+        public async Task<IActionResult> OnPostAsync()
         {
-            return NotFound();
-        }
-        return Page();
-    }
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-    public async Task<IActionResult> OnPostAsync(int id)
-    {
-        var seedToUpdate = await _context.Seeds.FindAsync(id);
+            _context.Attach(SeedPacket).State = EntityState.Modified;
 
-        if (seedToUpdate == null)
-        {
-            return NotFound();
-        }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SeedPacketExists(SeedPacket.SeedId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        if (await TryUpdateModelAsync<Seed>(
-            seedToUpdate,
-            "seed",
-            s => s.Variety, s => s.Name, s => s.EnrollmentDate))
-        {
-            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
 
-        return Page();
-    }
-
-        private bool SeedExists(int id)
+        private bool SeedPacketExists(int id)
         {
-            return _context.Seeds.Any(e => e.ID == id);
+            return _context.SeedPackets.Any(e => e.SeedId == id);
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SeedLibrary.Data;
 using SeedLibrary.Models;
 
-namespace SeedLibrary.Pages.Seeds
+namespace SeedLibrary.Pages_Seeds
 {
     public class CreateModel : PageModel
     {
@@ -21,28 +21,25 @@ namespace SeedLibrary.Pages.Seeds
 
         public IActionResult OnGet()
         {
+        ViewData["VarietyName"] = new SelectList(_context.Varieties, "VarietyName", "VarietyName");
             return Page();
         }
 
         [BindProperty]
-        public Seed Seed { get; set; } = default!;
+        public SeedPacket SeedPacket { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            var emptySeed = new Seed();
-
-            if (await TryUpdateModelAsync<Seed>(
-                emptySeed,
-                "seed",   // Prefix for form value.
-                s => s.Variety, s => s.Name, s => s.EnrollmentDate))
+            if (!ModelState.IsValid)
             {
-                _context.Seeds.Add(emptySeed);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                return Page();
             }
 
-            return Page();
+            _context.SeedPackets.Add(SeedPacket);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }

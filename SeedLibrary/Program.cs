@@ -13,7 +13,7 @@ builder.Services.AddDbContext<SeedContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SeedContextSQLite")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => 
-options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SeedContext>();
+    options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SeedContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -32,14 +32,15 @@ else
     app.UseMigrationsEndPoint();
 }
 
-using (var scope = app.Services.CreateScope())
-{
+/*using (var scope = app.Services.CreateScope())
+//{
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<SeedContext>();
     context.Database.EnsureCreated();
-    DbInitializer.Initialize(context);
+    //DbInitializer.Initialize(context);
 }
+*/
 
 app.UseHttpsRedirection();
 

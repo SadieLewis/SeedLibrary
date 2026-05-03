@@ -1,74 +1,37 @@
 @page
-@model SeedLibrary.Pages.Seeds.DetailsModel
+@model SeedLibrary.Pages_Seeds.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
 }
-<head>
-    <link rel="stylesheet" type="text/css" href="css/spotlight.css">
-</head>
+
 <h1>Details</h1>
+
 <div>
+    <h4>SeedPacket</h4>
     <hr />
-    <div class="row  mb-4">
-        <div class="col-sm-6">
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Name)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Name)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Variety)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Variety)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Year)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Year)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Date)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Date)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Source)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Source)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Depth)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Depth)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Count)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Count)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Seed.Note)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Seed.Note)
-                </dd>
-            </dl>
-        </div>
-        <div class= "col-sm-6">
-            <img src="/images/Vegetable.png" alt="Seed Library" style= "width: 200px; height: 200px">
-        </div>
-    </div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Count)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SeedPacket.Count)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SeedPacket.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Variety)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SeedPacket.Variety.VarietyName)
+        </dd>
+    </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Seed.ID">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.SeedPacket.SeedId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

@@ -15,9 +15,6 @@ namespace SeedLibrary.Models
         [ForeignKey(nameof(VarietyName))]
         public Variety Variety { get; set; } = null!;
 
-        public string CommonNameName {get; set;}
-        [ForeignKey(nameof(CommonNameName))]
-        public CommonName CommonName {get; set;}
 
         public ICollection<Donation> Donations { get; set; } = new List<Donation>();
         public ICollection<Growing> Growings { get; set; } = new List<Growing>();

@@ -8,48 +8,37 @@ using Microsoft.EntityFrameworkCore;
 using SeedLibrary.Data;
 using SeedLibrary.Models;
 
-using Microsoft.Extensions.Logging;
-
-namespace SeedLibrary.Pages.Seeds
+namespace SeedLibrary.Pages_Seeds
 {
     public class DeleteModel : PageModel
     {
         private readonly SeedLibrary.Data.SeedContext _context;
-        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(SeedLibrary.Data.SeedContext context,
-                           ILogger<DeleteModel> logger)
+        public DeleteModel(SeedLibrary.Data.SeedContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         [BindProperty]
-        public Seed Seed { get; set; }
-        public string ErrorMessage { get; set; }
+        public SeedPacket SeedPacket { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Seed = await _context.Seeds
-                .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var seedpacket = await _context.SeedPackets.FirstOrDefaultAsync(m => m.SeedId == id);
 
-            if (Seed == null)
+            if (seedpacket is not null)
             {
-                return NotFound();
+                SeedPacket = seedpacket;
+
+                return Page();
             }
 
-            if (saveChangesError.GetValueOrDefault())
-            {
-                ErrorMessage = String.Format("Delete {ID} failed. Try again", id);
-            }
-
-            return Page();
+            return NotFound();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
@@ -59,26 +48,15 @@ namespace SeedLibrary.Pages.Seeds
                 return NotFound();
             }
 
-            var seed = await _context.Seeds.FindAsync(id);
-
-            if (seed == null)
+            var seedpacket = await _context.SeedPackets.FindAsync(id);
+            if (seedpacket != null)
             {
-                return NotFound();
-            }
-
-            try
-            {
-                _context.Seeds.Remove(seed);
+                SeedPacket = seedpacket;
+                _context.SeedPackets.Remove(SeedPacket);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
             }
-            catch (DbUpdateException ex)
-            {
-                _logger.LogError(ex, ErrorMessage);
 
-                return RedirectToAction("./Delete",
-                                     new { id, saveChangesError = true });
-            }
+            return RedirectToPage("./Index");
         }
     }
 }

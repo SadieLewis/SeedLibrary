@@ -1,13 +1,14 @@
 namespace SeedLibrary.Models
 {
-    public class Date
+    public class PlantingDate
     {
         public int Id { get; set; }
 
-        public string StartMonth { get; set; }
+        public int StartMonth { get; set; }
 
-        public string EndMonth { get; set; }
+        public int EndMonth { get; set; }
 
         public ICollection<Growing> Growings { get; set; } = new List<Growing>();
+
     }
 }

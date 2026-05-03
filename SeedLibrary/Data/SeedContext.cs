@@ -5,9 +5,9 @@ using SeedLibrary.Models;
 
 namespace SeedLibrary.Data
 {
-    public class SeedPacketContext : DbContext
+    public class SeedContext : DbContext
     {
-        public SeedPacketContext (DbContextOptions<SeedPacketContext> options)
+        public SeedContext (DbContextOptions<SeedContext> options)
             : base(options)
         {
         }
@@ -16,7 +16,7 @@ namespace SeedLibrary.Data
         public DbSet<Variety> Varieties => Set<Variety>();
         public DbSet<CommonName> CommonNames => Set<CommonName>();
         public DbSet<Source> Sources => Set<Source>();
-        public DbSet<Date> Dates => Set<Date>();
+        public DbSet<PlantingDate> PlantingDates => Set<PlantingDate>();
         public DbSet<Donation> Donations => Set<Donation>();
         public DbSet<Growing> Growings => Set<Growing>();
     
@@ -30,12 +30,12 @@ namespace SeedLibrary.Data
                 .HasKey(c => c.Name);
             modelBuilder.Entity<Source>().ToTable("Source")
                 .HasKey(s => s.Id);
-            modelBuilder.Entity<Date>().ToTable("Date")
+            modelBuilder.Entity<PlantingDate>().ToTable("PlantingDate")
                 .HasKey(d => d.Id);
             modelBuilder.Entity<Donation>().ToTable("Donation")
                 .HasKey(d => new { d.SourceId, d.SeedId, d.Year });
             modelBuilder.Entity<Growing>().ToTable("Growing")
-                .HasKey(g => new { g.DatesId, g.SeedId });
+                .HasKey(g => new { g.PlantingDatesId, g.SeedId });
             modelBuilder.Entity<SeedPacket>()
                 .HasOne(s => s.Variety)
                 .WithMany(v => v.SeedPackets)
@@ -56,9 +56,9 @@ namespace SeedLibrary.Data
                 .HasForeignKey(d => d.SeedId);
 
             modelBuilder.Entity<Growing>()
-                .HasOne(g => g.Date)
+                .HasOne(g => g.PlantingDate)
                 .WithMany(d => d.Growings)
-                .HasForeignKey(g => g.DatesId);
+                .HasForeignKey(g => g.PlantingDatesId);
 
             modelBuilder.Entity<Growing>()
                 .HasOne(g => g.SeedPacket)
