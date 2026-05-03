@@ -32,8 +32,6 @@
 <table class="table table-success">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Count)</th>
-            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Note)</th>
             <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Variety)</th>
             <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Variety.CommonName)</th>
             <th>Depth</th>
@@ -41,6 +39,7 @@
             <th>Year</th>
             <th>Start Month</th>
             <th>End Month</th>
+            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Count)</th>            
             <th></th>
         </tr>
     </thead>
@@ -48,8 +47,7 @@
 @foreach (var item in Model.SeedPacket)
 {
         <tr>
-            <td>@item.Count</td>
-            <td>@item.Note</td>
+            
             <td>@item.Variety.VarietyName</td>
             <td>@item.Variety.CommonName.Name</td>
             <td>@item.Variety.Depth</td>
@@ -68,18 +66,20 @@
             <td>
                 @foreach (var growing in item.Growings)
                 {
-                    <div>@growing.PlantingDate.StartMonth</div>
+                    <div>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.StartMonth)</div>
                 }
             </td>
             <td>
                 @foreach (var growing in item.Growings)
                 {
-                    <div>@growing.PlantingDate.EndMonth</div>
+                    <div>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.EndMonth)</div>
                 }
             </td>
+            <td>@item.Count</td>
             <td>
                 <a asp-page="./Details" asp-route-id="@item.SeedId">Details</a>
             </td>
+
         </tr>
 }
     </tbody>
