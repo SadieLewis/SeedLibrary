@@ -7,9 +7,9 @@ using SeedLibrary.Models;
 
 namespace SeedLibrary.Data
 {
-    public class SeedContext : DbContext
+    public class SeedPacketContext : DbContext
     {
-        public SeedContext (DbContextOptions<SeedContext> options)
+        public SeedPacketContext (DbContextOptions<SeedPacketContext> options)
             : base(options)
         {
         }
