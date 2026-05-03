@@ -2,60 +2,67 @@
 @model SeedLibrary.Pages_Seeds.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Seeds";
 }
 
-<h1>Index</h1>
+<h1 style="font-family: 'Lato-Bold'; font-size: 60px">Seed Inventory</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p style="border: 2px solid #8BC441; background-color: #8BC441; padding: 10px;">
+            Search Seed Name:
+            <input type="text" name="searchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="search-btn" /> |
+            <a asp-page="./Index" id="backto">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<p><b>Sort By:</b></p>
+<a asp-page="./Index" asp-route-sortOrder="@Model.VarietySort" asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-link">
+    Variety
+</a>
+<a asp-page="./Index" asp-route-sortOrder="@Model.CommonNameSort" asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-link">
+    Common Name
+</a>
+<a asp-page="./Index" asp-route-sortOrder="@Model.YearSort" asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-link">
+    Year
+</a>
+
+<table class="table table-success">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SeedPacket[0].Count)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SeedPacket[0].Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SeedPacket[0].Variety)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SeedPacket[0].Variety.CommonName)
-            </th>
-             <th>
-                Source
-            </th>
-            <th>
-                Start Month
-            </th>
-            <th>
-                End Month
-            </th>
+            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Count)</th>
+            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Note)</th>
+            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Variety)</th>
+            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Variety.CommonName)</th>
+            <th>Depth</th>
+            <th>Source</th>
+            <th>Year</th>
+            <th>Start Month</th>
+            <th>End Month</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.SeedPacket) {
+@foreach (var item in Model.SeedPacket)
+{
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Variety.VarietyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Variety.CommonName.Name)
-            </td>
+            <td>@item.Count</td>
+            <td>@item.Note</td>
+            <td>@item.Variety.VarietyName</td>
+            <td>@item.Variety.CommonName.Name</td>
+            <td>@item.Variety.Depth</td>
             <td>
                 @foreach (var donation in item.Donations)
                 {
                     <div>@donation.Source.SourceName</div>
+                }
+            </td>
+            <td>
+                @foreach (var donation in item.Donations)
+                {
+                    <div>@donation.Year</div>
                 }
             </td>
             <td>
@@ -71,11 +78,30 @@
                 }
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.SeedId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.SeedId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.SeedId">Delete</a>
+                <a asp-page="./Details" asp-route-id="@item.SeedId">Details</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.SeedPacket.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.SeedPacket.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.SeedPacket.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.SeedPacket.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
