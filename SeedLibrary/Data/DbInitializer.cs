@@ -54,6 +54,7 @@ namespace SeedLibrary.Data
             var dates = new PlantingDate[]
             {
                 new PlantingDate { Id = 1, StartMonth = 1, EndMonth = 3},
+                new PlantingDate { Id = 3, StartMonth = 3, EndMonth = 6},
                 new PlantingDate { Id = 2, StartMonth = 9, EndMonth = 10 }
             };
             context.PlantingDates.AddRange(dates);
@@ -96,7 +97,7 @@ namespace SeedLibrary.Data
                 new Growing { PlantingDatesId = 1, SeedId = 5 },
                 new Growing { PlantingDatesId = 2, SeedId = 6 },
                 new Growing { PlantingDatesId = 2, SeedId = 7 },
-                new Growing { PlantingDatesId = 2, SeedId = 8 }
+                new Growing { PlantingDatesId = 3, SeedId = 8 }
             };
             context.Growings.AddRange(growings);
             context.SaveChanges();
