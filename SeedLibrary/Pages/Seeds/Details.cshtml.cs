@@ -20,6 +20,7 @@ namespace SeedLibrary.Pages_Seeds
         }
 
         public SeedPacket SeedPacket { get; set; } = default!;
+        
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,7 +29,14 @@ namespace SeedLibrary.Pages_Seeds
                 return NotFound();
             }
 
-            var seedpacket = await _context.SeedPackets.FirstOrDefaultAsync(m => m.SeedId == id);
+            var seedpacket = await _context.SeedPackets
+                .Include(s => s.Variety)
+                    .ThenInclude(v => v.CommonName)
+            .Include(s => s.Donations)
+                .ThenInclude(d => d.Source)
+            .Include(s => s.Growings)
+                .ThenInclude(g => g.PlantingDate)
+            .FirstOrDefaultAsync(m => m.SeedId == id);
 
             if (seedpacket is not null)
             {

@@ -33,7 +33,7 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Variety)</th>
-            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Variety.CommonName)</th>
+            <th>@Html.DisplayNameFor(model => model.SeedPacket[0].Variety.CommonName.Name)</th>
             <th>Depth</th>
             <th>Source</th>
             <th>Year</th>
@@ -75,6 +75,7 @@
                     <div>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.EndMonth)</div>
                 }
             </td>
+            
             <td>@item.Count</td>
             <td>
                 <a asp-page="./Details" asp-route-id="@item.SeedId">Details</a>

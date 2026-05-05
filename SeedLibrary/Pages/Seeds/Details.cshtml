@@ -8,9 +8,56 @@
 <h1>Details</h1>
 
 <div>
-    <h4>SeedPacket</h4>
+    <h4>Seed Packet</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Variety.CommonName.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SeedPacket.Variety.CommonNameName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Variety)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SeedPacket.Variety.VarietyName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Donations.First().Source)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var donation in Model.SeedPacket.Donations)
+            {
+                <div>@donation.Source.SourceName</div>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Donations.First().Year)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var donation in Model.SeedPacket.Donations)
+            {
+                <div>@donation.Year</div>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Growing Season
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var growing in Model.SeedPacket.Growings)
+            {
+                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.StartMonth)
+                @: -
+                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.EndMonth)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SeedPacket.Variety.Depth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SeedPacket.Variety.Depth)
+        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.SeedPacket.Count)
         </dt>
@@ -22,12 +69,6 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SeedPacket.Note)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SeedPacket.Variety)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SeedPacket.Variety.VarietyName)
         </dd>
     </dl>
 </div>
