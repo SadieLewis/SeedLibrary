@@ -1,5 +1,6 @@
 @page
 @using System.Buffers
+@using Microsoft.CodeAnalysis.CSharp.Syntax
 @model SeedLibrary.Pages.SpotlightSeeds.SpotlightSeedsModel
 
 @{
@@ -8,12 +9,6 @@
 
 <link rel="stylesheet" type="text/css" href="~/css/spotlight.css">
 
-<script>
-    const d = new Date();
-    let currentmonthindex = d.getMonth();
-    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var currentmonth = months[currentmonthindex];
-</script>
 
 <div class="row mb-auto">
     <div class="row mb-4">
@@ -39,27 +34,6 @@
                     }
                 </div>
             </div>
-
-            @{
-                var prevDisabled = !Model.Seeds.HasPreviousPage ? "disabled" : "";
-                var nextDisabled = !Model.Seeds.HasNextPage ? "disabled" : "";
-            }
-
-            <a asp-page="./SpotlightSeeds"
-               asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-currentFilter="@Model.CurrentFilter"
-               asp-route-pageIndex="@(Model.Seeds.PageIndex - 1)"
-               class="btn btn-primary @prevDisabled">
-                Previous
-            </a>
-
-            <a asp-page="./SpotlightSeeds"
-               asp-route-sortOrder="@Model.CurrentSort"
-               asp-route-currentFilter="@Model.CurrentFilter"
-               asp-route-pageIndex="@(Model.Seeds.PageIndex + 1)"
-               class="btn btn-primary @nextDisabled">
-                Next
-            </a>
         </div>
 
         <div class="col-sm-6">
