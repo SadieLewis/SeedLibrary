@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SeedLibrary.Data;
 using Microsoft.AspNetCore.Identity;
-using SeedLibrary.Areas.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +44,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

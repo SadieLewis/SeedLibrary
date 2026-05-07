@@ -6,7 +6,12 @@
 }
 
 <h1 style="font-family: 'Lato-Bold'; font-size: 60px">Seed Inventory</h1>
-
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <p>
+        <a asp-page="./Create" class="btn btn-success mb-3">Add New Seed</a>
+    </p>
+}
 <form asp-page="./Index" method="get">
     <div class="form-actions no-color">
         <p style="border: 2px solid #8BC441; background-color: #8BC441; padding: 10px;">
@@ -79,6 +84,11 @@
             <td>@item.Count</td>
             <td>
                 <a asp-page="./Details" asp-route-id="@item.SeedId">Details</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.SeedId">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.SeedId">Delete</a>
+                }
             </td>
 
         </tr>
