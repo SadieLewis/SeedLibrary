@@ -5,7 +5,7 @@ using SeedLibrary.Models;
 
 namespace SeedLibrary.Data
 {
-    public class SeedContext : DbContext
+    public class SeedContext : IdentityDbContext
     {
         public SeedContext (DbContextOptions<SeedContext> options)
             : base(options)
@@ -22,6 +22,8 @@ namespace SeedLibrary.Data
     
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<SeedPacket>().ToTable("SeedPacket")
                 .HasKey(s => s.SeedId);
             modelBuilder.Entity<Variety>().ToTable("Variety")

@@ -35,9 +35,40 @@
                         <li class="nav-item" style="border-bottom: 4px solid #EC373C; --hover-color:#EC373C;">
                             <a class="nav-link text-dark" style="font-family: 'Lato-Bold'; font-size: 23px;" asp-area="" asp-page="/Order">Order</a>
                         </li>
-                        <li class="nav-item" style="border-bottom: 4px solid #005117; --hover-color:#005117;">
-                            <a class="nav-link text-dark" style="font-family: 'Lato-Bold'; font-size: 23px;" asp-area="Identity" asp-page="/Account/Login">Admin Login</a>
+                        @if (User.Identity.IsAuthenticated == true)
+                        {
+                        <li class="nav-item dropdown" style="border-bottom: 4px solid #005117;">
+                            <a class="nav-link dropdown-toggle text-dark"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            style="font-family: 'Lato-Bold'; font-size: 23px;">
+                                @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/Seeds/Index">Manage Inventory</a>
+                                    </li>
+                                }
+                                <li>
+                                    <form method="post"
+                                        asp-area="Identity"
+                                        asp-page="/Account/Logout">
+                                        <button type="submit"class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
+                        }
+                        else
+                        {
+                        <li class="nav-item" style="border-bottom: 4px solid #005117; --hover-color:#005117;">
+                            <a class="nav-link text-dark" style="font-family: 'Lato-Bold'; font-size: 23px;" asp-area="Identity"
+                            asp-page="/Account/Login">Admin Login Here</a>
+                        </li>
+                    }
                     </ul>
                 </div>
             </div>

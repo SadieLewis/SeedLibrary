@@ -1,0 +1,49 @@
+@page
+@model SeedLibrary.Pages.Seeds.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>Seed</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Seed.Variety.CommonName.Name" class="control-label"></label>
+                <input asp-for="Seed.Variety.CommonName.Name" class="form-control" />
+                <span asp-validation-for="Seed.Variety.CommonName.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Seed.Variety.CommonNameName" class="control-label"></label>
+                <input asp-for="Seed.Variety.CommonNameName" class="form-control" />
+                <span asp-validation-for="Seed.Variety.CommonNameName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Seed.Variety" class="control-label"></label>
+                <input asp-for="Seed.Variety" class="form-control" />
+                <span asp-validation-for="Seed.Variety" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Seed.Variety.VarietyName" class="control-label"></label>
+                <input asp-for="Seed.Variety.VarietyName" class="form-control" />
+                <span asp-validation-for="Seed.Variety.VarietyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
