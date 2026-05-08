@@ -46,6 +46,14 @@
                         @Model.InSeasonSeeds[i].Variety.VarietyName @Model.InSeasonSeeds[i].Variety.CommonName.Name
                     </p>
                 }
+                <!--IF NO SEEDS IN SEASON-->
+                @if (Model.InSeasonSeeds.Count == 0){
+                    <p>
+                        Unfortunately, no seeds in our collection are in season this month. 
+                        Please check back next month, or view our inventory to see all our available seeds!
+                        Since some of our seeds have alternate seasons, if there is something specific you want to grow it might be worth checking. 
+                    </p>
+                }
             </div>
             <div class="row">
                 <p>If you want to get started with your garden this month the seeds above are a good option!</p>

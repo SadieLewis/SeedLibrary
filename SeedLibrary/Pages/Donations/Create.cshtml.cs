@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SeedLibrary.Data;
 using SeedLibrary.Models;
 
-namespace SeedLibrary.Pages.Seeds
+namespace SeedLibrary.Pages.Donations
 {
     public class CreateModel : PageModel
     {
@@ -21,13 +21,13 @@ namespace SeedLibrary.Pages.Seeds
 
         public IActionResult OnGet()
         {
-            ViewData["VarietyName"] = new SelectList(_context.Varieties, "VarietyName", "VarietyName");
+            ViewData["SeedId"] = new SelectList(_context.SeedPackets, "SeedId", "SeedId");
             ViewData["SourceName"] = new SelectList(_context.Sources, "SourceName", "SourceName");
             return Page();
         }
 
         [BindProperty]
-        public SeedPacket SeedPacket { get; set; } = default!;
+        public Donation Donation { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -37,7 +37,7 @@ namespace SeedLibrary.Pages.Seeds
                 return Page();
             }
 
-            _context.SeedPackets.Add(SeedPacket);
+            _context.Donations.Add(Donation);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
