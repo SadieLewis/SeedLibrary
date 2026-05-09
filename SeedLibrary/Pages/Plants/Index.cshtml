@@ -1,4 +1,5 @@
 @page
+@using Microsoft.AspNetCore.Http.Features
 @using SeedLibrary.Models
 @model SeedLibrary.Pages.Plants.IndexModel
 
@@ -9,7 +10,9 @@
 <h2>Plants</h2>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-success mb-3">Create New Plant</a>
+    <a asp-page="/Varieties/Index" class="btn btn-warning mb-3">View Plant Varieties</a>
+    <a asp-page="/Varieties/Create" class="btn btn-warning mb-3">Create New Plant Variety</a>
 </p>
 
 <table class="table">
@@ -18,11 +21,12 @@
             <th>
                 Plant Common Name
             </th>
-            <!-- WAITING TO SEE IF A GOOD IDEA TO DISPLAY HERE ONCE ADDING VARIETIES POSSIBLE
             <th>
-                Variety
+                Varieties
             </th>
-            -->
+            <th>
+                Number of Varieties
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +34,12 @@
         <tr>
             <td>
                 @item.Name
+            </td>
+            <td>
+                @string.Join(", ", item.Varieties.Select(v => v.VarietyName))
+            </td>
+            <td>
+                @item.Varieties.Count
             </td>
         </tr>
 }
