@@ -21,8 +21,8 @@ namespace SeedLibrary.Pages.Donations
 
         public IActionResult OnGet()
         {
-            ViewData["SeedId"] = new SelectList(_context.SeedPackets, "SeedId", "SeedId");
-            ViewData["SourceName"] = new SelectList(_context.Sources, "SourceName", "SourceName");
+            ViewData["SeedId"] = new SelectList(_context.SeedPackets, "SeedId", "VarietyName");
+            ViewData["SourceName"] = new SelectList(_context.Sources, "Id", "SourceName");
             return Page();
         }
 
