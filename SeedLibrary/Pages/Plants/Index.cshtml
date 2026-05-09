@@ -1,0 +1,37 @@
+@page
+@using SeedLibrary.Models
+@model SeedLibrary.Pages.Plants.IndexModel
+
+@{
+    ViewData["Title"] = "Donations";
+}
+
+<h2>Plants</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Plant Common Name
+            </th>
+            <!-- WAITING TO SEE IF A GOOD IDEA TO DISPLAY HERE ONCE ADDING VARIETIES POSSIBLE
+            <th>
+                Variety
+            </th>
+            -->
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CommonName) {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
