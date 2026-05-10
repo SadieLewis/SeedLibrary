@@ -89,7 +89,7 @@ namespace SeedLibrary.Pages_Seeds
                     break;
             }
 
-            var pageSize = Configuration.GetValue("PageSize", 4);
+            var pageSize = Configuration.GetValue("PageSize", 10);
 
             SeedPacket = await PaginatedList<SeedPacket>.CreateAsync(
                 seedIQ.AsNoTracking(),

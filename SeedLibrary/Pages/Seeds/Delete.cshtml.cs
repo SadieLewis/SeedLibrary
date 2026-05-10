@@ -29,12 +29,17 @@ namespace SeedLibrary.Pages.Seeds
                 return NotFound();
             }
 
-            var Seed = await _context.SeedPackets.FirstOrDefaultAsync(m => m.SeedId == id);
+            Seed = await _context.SeedPackets
+                    .Include(s => s.Variety)
+                        .ThenInclude(v => v.CommonName)
+                    .Include(s => s.Donations)
+                        .ThenInclude(d => d.Source)
+                    .Include(s => s.Growings)
+                        .ThenInclude(g => g.PlantingDate)
+                    .FirstOrDefaultAsync(m => m.SeedId == id);
 
             if (Seed is not null)
             {
-                Seed = Seed;
-
                 return Page();
             }
 
@@ -48,13 +53,22 @@ namespace SeedLibrary.Pages.Seeds
                 return NotFound();
             }
 
-            Seed = await _context.SeedPackets.FirstOrDefaultAsync(m => m.SeedId == id);
+            Seed = await _context.SeedPackets
+                .Include(s => s.Donations)
+                .Include(s => s.Growings)
+                .FirstOrDefaultAsync(m => m.SeedId == id);
 
             if (Seed == null)
             {
                 return NotFound();
             }
-            return Page();
+            _context.Donations.RemoveRange(Seed.Donations);
+            _context.Growings.RemoveRange(Seed.Growings);
+
+            _context.SeedPackets.Remove(Seed);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }

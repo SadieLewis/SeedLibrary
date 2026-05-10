@@ -15,33 +15,24 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Seed.Variety.CommonName.Name)
+            Common Name
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Seed.Variety.CommonNameName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Seed.Variety)
+            Variety
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Seed.Variety.VarietyName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Seed.Donations.First().Source)
+            Source
         </dt>
         <dd class="col-sm-10">
             @foreach (var donation in Model.Seed.Donations)
             {
-                <div>@donation.Source.SourceName</div>
-            }
-        </dd>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Seed.Donations.First().Year)
-        </dd>
-        <dd class="col-sm-10">
-            @foreach (var donation in Model.Seed.Donations)
-            {
-                <div>@donation.Year</div>
+                <div>@donation.Source.SourceName - @donation.Year</div>
             }
         </dd>
         <dt class="col-sm-2">
@@ -50,9 +41,11 @@
         <dd class="col-sm-10">
             @foreach (var growing in Model.Seed.Growings)
             {
-                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.StartMonth)
-                @: -
-                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.EndMonth)
+                <div>
+                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.StartMonth)
+                    -
+                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(growing.PlantingDate.EndMonth)
+                </div>
             }
         </dd>
         <dt class="col-sm-2">

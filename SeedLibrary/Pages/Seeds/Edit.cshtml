@@ -1,16 +1,17 @@
-@page
-@model SeedLibrary.Pages.Seeds.CreateModel
+@page "{id:int}"
+@model SeedLibrary.Pages.Seeds.EditModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Add New Seed Packet</h2>
+<h1>Edit Seed Packet</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SeedPacket.SeedId" />
 
             <h5>Seed Info</h5>
             <div class="form-group">
@@ -21,14 +22,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="SeedPacket.VarietyName" class="control-label"></label>
-                <select asp-for="SeedPacket.VarietyName" id="VarietySelect" class="form-control" disabled>
+                <select asp-for="SeedPacket.VarietyName" id="VarietySelect" class="form-control">
                     <option value="">-- Select Common Name first --</option>
                 </select>
             </div>
             <div class="form-group">
                 <label asp-for="SeedPacket.Count" class="control-label"></label>
                 <input asp-for="SeedPacket.Count" class="form-control" />
-                
+                <span asp-validation-for="SeedPacket.Count" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SeedPacket.Note" class="control-label"></label>
@@ -38,14 +39,12 @@
 
             <h5>Donation Info</h5>
             <div class="form-group">
-                <label asp-for="Donation.SourceId" class="control-label">Source</label>
-                <select asp-for="Donation.SourceId" class="form-control" asp-items="ViewBag.SourceId">
-                    <option value="">-- Select Source --</option>
-                </select>
+                <label class="control-label">Source</label>
+                <select name="Donation.SourceId" class="form-control" asp-items="ViewBag.SourceId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Donation.Year" class="control-label"></label>
-                <input asp-for="Donation.Year" class="form-control" />
+                <label class="control-label">Year</label>
+                <input name="Donation.Year" class="form-control" value="@Model.ExistingDonation?.Year" />
             </div>
 
             <h5>Planting Info</h5>
@@ -55,11 +54,12 @@
                     @foreach (var option in Model.PlantingDateOptions)
                     {
                         <div class="form-check">
-                            <input type="checkbox" 
-                                class="form-check-input" 
-                                name="SelectedPlantingDateIds" 
-                                value="@option.Value" 
-                                id="planting_@option.Value" />
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="SelectedPlantingDateIds"
+                                   value="@option.Value"
+                                   id="planting_@option.Value"
+                                   @(Model.SelectedPlantingDateIds.Contains(int.Parse(option.Value)) ? "checked" : "") />
                             <label class="form-check-label" for="planting_@option.Value">
                                 @option.Text
                             </label>
@@ -69,20 +69,21 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index" class="btn btn-blue">Back to List</a>
+    <a asp-page="./Index" class="btn btn-blue">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         const varieties = @Html.Raw(ViewData["VarietiesJson"]);
+        const currentVariety = "@Model.SeedPacket.VarietyName";
 
         document.getElementById('CommonNameSelect').addEventListener('change', function () {
             const varietySelect = document.getElementById('VarietySelect');
@@ -90,10 +91,19 @@
 
             varietySelect.innerHTML = '<option value="">-- Select Variety --</option>';
             filtered.forEach(v => {
-                varietySelect.innerHTML += `<option value="${v.VarietyName}">${v.VarietyName}</option>`;
+                const selected = v.VarietyName === currentVariety ? 'selected' : '';
+                varietySelect.innerHTML += `<option value="${v.VarietyName}" ${selected}>${v.VarietyName}</option>`;
             });
 
             varietySelect.disabled = this.value === '';
         });
+
+
+        const currentCommonName = "@Model.CurrentCommonName";
+        if (currentCommonName) {
+            const commonNameSelect = document.getElementById('CommonNameSelect');
+            commonNameSelect.value = currentCommonName;
+            commonNameSelect.dispatchEvent(new Event('change'));
+        }
     </script>
 }
