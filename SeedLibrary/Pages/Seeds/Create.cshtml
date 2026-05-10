@@ -1,53 +1,98 @@
 @page
 @model SeedLibrary.Pages.Seeds.CreateModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
-             <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+@{
+    ViewData["Title"] = "Create";
+}
 
-        
-        <h1>Create</h1>
-        
-    <h4>Seed</h4>
-    <hr />
-    <div class="row">
+<h2>Add New Seed Packet</h2>
+<hr />
+<div class="row">
     <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <h5>Seed Info</h5>
+            <div class="form-group">
+                <label class="control-label">Common Name</label>
+                <select id="CommonNameSelect" class="form-control" asp-items="ViewBag.CommonName">
+                    <option value="">-- Select Common Name --</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label asp-for="SeedPacket.VarietyName" class="control-label"></label>
-                <select asp-for="SeedPacket.VarietyName" class ="form-control" asp-items="ViewBag.VarietyName" ></select>
+                <select asp-for="SeedPacket.VarietyName" id="VarietySelect" class="form-control" disabled>
+                    <option value="">-- Select Common Name first --</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="SeedPacket.Count" class="control-label"></label>
                 <input asp-for="SeedPacket.Count" class="form-control" />
+                
             </div>
             <div class="form-group">
                 <label asp-for="SeedPacket.Note" class="control-label"></label>
                 <input asp-for="SeedPacket.Note" class="form-control" />
-                <span asp-validation-for="SeedPacket.Note" class="text-danger"></span>
+            </div>
+
+            <h5>Donation Info</h5>
+            <div class="form-group">
+                <label asp-for="Donation.SourceId" class="control-label">Source</label>
+                <select asp-for="Donation.SourceId" class="form-control" asp-items="ViewBag.SourceId">
+                    <option value="">-- Select Source --</option>
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="SeedPacket.Donations" class="control-label"></label>
-                <select asp-for="SeedPacket.Donations" class ="form-control" asp-items="ViewBag.Donations" ></select>
+                <label asp-for="Donation.Year" class="control-label"></label>
+                <input asp-for="Donation.Year" class="form-control" />
             </div>
+
+            <h5>Planting Info</h5>
             <div class="form-group">
-                <label asp-for="SeedPacket.Growings" class="control-label"></label>
-                <select asp-for="SeedPacket.Growings" class ="form-control" asp-items="ViewBag.Growings" ></select>
+                <label class="control-label">Planting Dates</label>
+                <div class="checkbox-list">
+                    @foreach (var option in Model.PlantingDateOptions)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" 
+                                class="form-check-input" 
+                                name="SelectedPlantingDateIds" 
+                                value="@option.Value" 
+                                id="planting_@option.Value" />
+                            <label class="form-check-label" for="planting_@option.Value">
+                                @option.Text
+                            </label>
+                        </div>
+                    }
+                </div>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-    <div>
-    </form>
+        </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index" class="btn btn-blue">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const varieties = @Html.Raw(ViewData["VarietiesJson"]);
+
+        document.getElementById('CommonNameSelect').addEventListener('change', function () {
+            const varietySelect = document.getElementById('VarietySelect');
+            const filtered = varieties.filter(v => v.CommonNameName === this.value);
+
+            varietySelect.innerHTML = '<option value="">-- Select Variety --</option>';
+            filtered.forEach(v => {
+                varietySelect.innerHTML += `<option value="${v.VarietyName}">${v.VarietyName}</option>`;
+            });
+
+            varietySelect.disabled = this.value === '';
+        });
+    </script>
 }

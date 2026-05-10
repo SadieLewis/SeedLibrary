@@ -1,0 +1,41 @@
+@page
+@model SeedLibrary.Pages.PlantingDates.IndexModel
+
+@{
+    ViewData["Title"] = "Planting Dates";
+}
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<h2>Planting Dates</h2>
+
+<p>
+    <a asp-page="Create" class="btn btn-darkgreen">Add New Planting Date</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Start Month
+            </th>
+            <th>
+                End Month
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.PlantingDate) {
+        <tr>
+            <td>
+                @item.StartMonth - @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.StartMonth)
+            </td>
+            <td>
+                @item.EndMonth - @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.EndMonth)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <a asp-page="/Seeds/Index" class="btn btn-blue">Back to Seed Inventory</a>
+</div>
