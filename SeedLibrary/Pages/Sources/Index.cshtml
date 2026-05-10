@@ -1,0 +1,35 @@
+@page
+@using SeedLibrary.Models
+@model SeedLibrary.Pages.Sources.IndexModel
+
+@{
+    ViewData["Title"] = "Sources";
+}
+     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<h2>Seed Sources</h2>
+<p>
+    <a asp-page="Create" class="btn btn-darkblue">Create New Seed Source</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Source Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Source) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SourceName)
+                </td>
+            </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="/Seeds/Index" class="btn btn-blue">Back to Seed Inventory</a>
+</div>

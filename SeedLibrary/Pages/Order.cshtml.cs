@@ -20,19 +20,19 @@ namespace SeedLibrary.Pages.Order
             _context = context;
             Configuration = configuration;
         }
-        public string NameSort { get; set; }
-        public string YearSort { get; set; }
+        public string VarietySort { get; set; }
+        public string CountSort { get; set; }
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
-        public PaginatedList<Seed> Seeds { get;set; } = default!;
+        public PaginatedList<SeedPacket> Seeds { get;set; } = default!;
         public List<int> SelectedSeeds { get; set; } = new();
 
         public async Task OnGetAsync(string sortOrder,
             string currentFilter, string searchString, int? pageIndex)
         {
             CurrentSort = sortOrder;
-            NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            YearSort = sortOrder == "Year" ? "year_desc" : "Year";
+            CountSort = string.IsNullOrEmpty(sortOrder) ? "count_desc" : "";
+            VarietySort = sortOrder == "Variety" ? "variety_desc" : "Variety";
             if (searchString != null)
             {
                 pageIndex = 1;
@@ -44,31 +44,43 @@ namespace SeedLibrary.Pages.Order
 
             CurrentFilter = searchString;
 
-            IQueryable<Seed> seedsIQ = from s in _context.Seeds select s;
+            IQueryable<SeedPacket> seedsIQ = _context.SeedPackets
+                .Include(s => s.Variety)
+                    .ThenInclude(v => v.CommonName)
+                .Include(s => s.Donations)
+                    .ThenInclude(d => d.Source)
+                .Include(s => s.Growings)
+                    .ThenInclude(g => g.PlantingDate);
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
-                seedsIQ = seedsIQ.Where(s => s.Name.Contains(searchString)
-                                    || s.Variety.Contains(searchString));
+                seedsIQ = seedsIQ.Where(s =>
+                    s.Note.Contains(searchString) ||
+                    s.Variety.VarietyName.Contains(searchString) ||
+                    s.Variety.CommonName.Name.Contains(searchString));
             }
             switch (sortOrder)
             {
-                case "name_desc":
-                    seedsIQ = seedsIQ.OrderByDescending(s => s.Name);
+                case "count_desc":
+                    seedsIQ = seedsIQ.OrderByDescending(s => s.Count);
                     break;
-                case "Year":
-                    seedsIQ = seedsIQ.OrderBy(s => s.Year);
+                case "Variety":
+                    seedsIQ = seedsIQ.OrderBy(s => s.Variety.VarietyName);
                     break;
-                case "Year_desc":
-                    seedsIQ = seedsIQ.OrderByDescending(s => s.Year);
+                case "variety_desc":
+                    seedsIQ = seedsIQ.OrderByDescending(s => s.Variety.VarietyName);
                     break;
                 default:
-                    seedsIQ = seedsIQ.OrderBy(s => s.Name);
+                    seedsIQ = seedsIQ.OrderBy(s => s.Count);
                     break;
             }
 
             var pageSize = Configuration.GetValue("PageSize", 5);
-            Seeds = await PaginatedList<Seed>.CreateAsync(seedsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
+            Seeds = await PaginatedList<SeedPacket>.CreateAsync(seedsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
+        }
+        public IActionResult OnPost()
+        {
+            return Page();
         }
         
     }

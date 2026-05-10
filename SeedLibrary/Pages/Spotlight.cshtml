@@ -1,67 +1,65 @@
 @page
 @using System.Buffers
+@using Microsoft.CodeAnalysis.CSharp.Syntax
 @model SeedLibrary.Pages.SpotlightSeeds.SpotlightSeedsModel
 
 @{
     ViewData["Title"] = "Seed Spotlight";
 }
 
-<link rel="stylesheet" type="text/css" href="css/spotlight.css">
+    <link rel="stylesheet" type="text/css" href="~/css/site.css">
 
-<script>
-    const d = new Date();
-    let currentmonthindex = d.getMonth();
-    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" "Aug", "Sep", "Oct", "Nov", "Dec"]
-    var currentmonth = months[currentmonthindex]
-</script>
 
 <div class="row mb-auto">
-    <div class="row  mb-4">
+    <div class="row mb-4">
         <div class="col-sm-6">
-            <h2 style = "border-bottom: 3vh solid #337ab7">Seed Spotlight</h2>
+            <h2 style="border-bottom: 3vh solid #337ab7">Seed Spotlight</h2>
             <div class="borderedcontainer">
                 <div style="overflow-y:scroll; height:450px">
-                <!-- TEMPORARY - NEED TO CHANGE TO TAKE ONLY SEED SPOTLIGHT ONCE DATABASE FINALISED -->
-                @for (int i = 0; i < Model.Seeds.Count; i++)
-                {
-                <div class="cardspotlight">
-                    <!-- TEMPORARY - NEEDS TO BE SEED IMAGE ONCE ADDED TO THE DATABASE -->
-                    <div class="row">
-                        <div class = "col-sm-4">
-                            <img src="/images/Vegetable.png" alt="Seed Library" style= "width: 80px; height: 80px" />
+                    <!-- TEMPORARY - NEED TO CHANGE TO TAKE ONLY SEED SPOTLIGHT ONCE DATABASE FINALISED -->
+                    @for (int i = 0; i < Model.Seeds.Count; i++)
+                    {
+                        <div class="cardspotlight">
+                            <!-- TEMPORARY - NEEDS TO BE SEED IMAGE ONCE ADDED TO THE DATABASE -->
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <img src="/images/Vegetable.png" alt="Seed Library" style="width: 80px; height: 80px" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>@Model.Seeds[i].Variety.VarietyName @Model.Seeds[i].Variety.CommonName.Name</p>
+                                    <a asp-page="/Seeds/Details" id="info" asp-route-id="@Model.Seeds[i].SeedId">More Information</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-8">
-                            <p>@Model.Seeds[i].Variety @Model.Seeds[i].Name<p>
-                            <a asp-page="./Seeds/Details" id = "info" asp-route-id="@Model.Seeds[i].ID">More Information</a>
-                        </div>
-                    </div>
-                </div>
-                }
+                    }
                 </div>
             </div>
         </div>
+
         <div class="col-sm-6">
-            <h3 style = "border-bottom: 3vh solid #AAD373">In Season Seeds</h3>
+            <h3 style="border-bottom: 3vh solid #AAD373">In Season Seeds</h3>
             <div class="borderedcontainer" id="inseasonsquare">
-                <!-- TEMPORARY - NEED TO TAKE FROM SEED MONTH AUTHOMATICALLY -->
-                @for (int i = 0; i < Model.Seeds.Count; i++)
+                <!-- TEMPORARY - NOW TAKES FROM PLANTINGDATE MONTHS -->
+                @for (int i = 0; i < Model.InSeasonSeeds.Count; i++)
                 {
-                    var x = Model.Seeds[i].Date;
-                    <!-- NEED TO PARSE FOR IN BETWEENS WITH STRING X-Y & Y-Z  (ANNOYING AS ITS A STRING)-->
-                    <!--I'll leave for now as may change with complete database-->
-                    if (x.Contains("Mar"))
-                    {
-                        <p>
-                            @Model.Seeds[i].Variety @Model.Seeds[i].Name
-                        </p>
-                    }
+                    <p>
+                        @Model.InSeasonSeeds[i].Variety.VarietyName @Model.InSeasonSeeds[i].Variety.CommonName.Name
+                    </p>
+                }
+                <!--IF NO SEEDS IN SEASON-->
+                @if (Model.InSeasonSeeds.Count == 0){
+                    <p>
+                        Unfortunately, no seeds in our collection are in season this month. 
+                        Please check back next month, or view our inventory to see all our available seeds!
+                        Since some of our seeds have alternate seasons, if there is something specific you want to grow it might be worth checking. 
+                    </p>
                 }
             </div>
             <div class="row">
                 <p>If you want to get started with your garden this month the seeds above are a good option!</p>
                 <p>To see the full variety of seeds in our catalogue, please view our inventory.</p>
-                <button type="button" class="webbutton" id="seedinvbut" onclick="location.href='/Seeds'">View Seed Inventory</button>
-                <button type="button" class="webbutton" id = "returnhome" onclick="location.href='/Index'">Return to Homepage</button>
+                <button type="button" class="webbutton" id="green" onclick="location.href='/Seeds'">View Seed Inventory</button>
+                <button type="button" class="webbutton" onclick="location.href='/Index'">Return to Homepage</button>
             </div>
         </div>
     </div>

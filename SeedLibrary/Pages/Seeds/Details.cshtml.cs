@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SeedLibrary.Data;
 using SeedLibrary.Models;
 
-namespace SeedLibrary.Pages.Seeds
+namespace SeedLibrary.Pages_Seeds
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,8 @@ namespace SeedLibrary.Pages.Seeds
             _context = context;
         }
 
-        public Seed Seed { get; set; } = default!;
+        public SeedPacket SeedPacket { get; set; } = default!;
+        
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,15 +29,18 @@ namespace SeedLibrary.Pages.Seeds
                 return NotFound();
             }
 
-                Seed = await _context.Seeds
-        .Include(s => s.Enrollments)
-        .ThenInclude(e => e.Course)
-        .AsNoTracking()
-        .FirstOrDefaultAsync(m => m.ID == id);
+            var seedpacket = await _context.SeedPackets
+                .Include(s => s.Variety)
+                    .ThenInclude(v => v.CommonName)
+            .Include(s => s.Donations)
+                .ThenInclude(d => d.Source)
+            .Include(s => s.Growings)
+                .ThenInclude(g => g.PlantingDate)
+            .FirstOrDefaultAsync(m => m.SeedId == id);
 
-            if (Seed is not null)
+            if (seedpacket is not null)
             {
-                Seed = Seed;
+                SeedPacket = seedpacket;
 
                 return Page();
             }

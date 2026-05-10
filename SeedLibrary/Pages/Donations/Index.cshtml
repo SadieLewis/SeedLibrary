@@ -1,0 +1,50 @@
+@page
+@using SeedLibrary.Models
+@model SeedLibrary.Pages.Donations.IndexModel
+
+@{
+    ViewData["Title"] = "Donations";
+}
+     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+
+<h2>Donations</h2>
+
+<p>
+    <a asp-page="Create" class="btn btn-darkgreen">Add New Donation</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Seed Source
+            </th>
+            <th>
+                Seed Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Donation[0].Year)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Donation) {
+        <tr>
+            <td>
+                @item.Source.SourceName
+            </td>
+            <td>
+                @item.SeedPacket.VarietyName @item.SeedPacket.Variety.CommonNameName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="/Seeds/Index" class="btn btn-blue">Back to Seed Inventory</a>
+</div>

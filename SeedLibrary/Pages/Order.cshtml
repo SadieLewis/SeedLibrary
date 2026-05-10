@@ -4,8 +4,8 @@
 @{
     ViewData["Title"] = "Order Seeds";
 }
+     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-<link rel="stylesheet" type="text/css" href="css/spotlight.css">
 
 <div class="row mb-auto">
     <div class="row  mb-4">
@@ -21,14 +21,24 @@
                                 <input class="form-check-input"
                                     type="checkbox"
                                     name="SelectedSeeds"
-                                    value="@Model.Seeds[i].ID" />
+                                    value="@Model.Seeds[i].SeedId" />
                                 <label class="form-check-label"></label>
                             </div>
-                            <h3>@Model.Seeds[i].Name</h3>
+                            <h3>@Model.Seeds[i].Variety.CommonNameName</h3>
                             <p>
-                                <b>Variety:</b> @Model.Seeds[i].Variety <br />
-                                <b>Year:</b> @Model.Seeds[i].Year <br />
-                                <b>Date:</b> @Model.Seeds[i].Date <br />
+                                <b>Variety:</b> @Model.Seeds[i].VarietyName <br />
+                                <b>Year:</b> @foreach (var donation in Model.Seeds[i].Donations)
+                                    {
+                                        <span>@donation.Year </span>
+                                    } <br />
+                                <b>Date:</b>@foreach (var growing in Model.Seeds[i].Growings)
+                                    {
+                                        <span>
+                                            @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(growing.PlantingDate.StartMonth)
+                                            -
+                                            @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(growing.PlantingDate.EndMonth)
+                                        </span>
+                                    }<br />
                                 <b>Count:</b> @Model.Seeds[i].Count
                             </p>
                         </div>
@@ -39,5 +49,21 @@
                 Add to Order
             </a>
         </form>
+        @{
+            var prevDisabled = !Model.Seeds.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.Seeds.HasNextPage ? "disabled" : "";
+        }
+
+        <a asp-page="./Order"
+        asp-route-pageIndex="@(Model.Seeds.PageIndex - 1)"
+        class="btn btn-primary @prevDisabled">
+            Previous
+        </a>
+
+        <a asp-page="./Order"
+        asp-route-pageIndex="@(Model.Seeds.PageIndex + 1)"
+        class="btn btn-primary @nextDisabled">
+            Next
+        </a>
     </div>
 </div>

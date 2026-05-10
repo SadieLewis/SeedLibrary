@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SeedLibrary.Data;
 using Microsoft.AspNetCore.Identity;
-using SeedLibrary.Areas.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +12,7 @@ builder.Services.AddDbContext<SeedContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SeedContextSQLite")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => 
-options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SeedContext>();
+    options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SeedContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -45,6 +44,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

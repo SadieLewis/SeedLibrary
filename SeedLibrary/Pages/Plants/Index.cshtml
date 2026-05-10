@@ -1,0 +1,52 @@
+@page
+@using Microsoft.AspNetCore.Http.Features
+@using SeedLibrary.Models
+@model SeedLibrary.Pages.Plants.IndexModel
+
+@{
+    ViewData["Title"] = "Donations";
+}
+     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<h2>Plants</h2>
+
+<p>
+    <a asp-page="Create" class="btn btn-darkred">Create New Plant</a>
+    <a asp-page="/Varieties/Index" class="btn btn-darkorange">View Plant Varieties</a>
+    <a asp-page="/Varieties/Create" class="btn btn-darkgreen">Create New Plant Variety</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Plant Common Name
+            </th>
+            <th>
+                Varieties
+            </th>
+            <th>
+                Number of Varieties
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CommonName) {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @string.Join(", ", item.Varieties.Select(v => v.VarietyName))
+            </td>
+            <td>
+                @item.Varieties.Count
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="/Seeds/Index" class="btn btn-blue">Back to Seed Inventory</a>
+</div>

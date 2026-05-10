@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,10 +35,48 @@
                         <li class="nav-item" style="border-bottom: 4px solid #EC373C; --hover-color:#EC373C;">
                             <a class="nav-link text-dark" style="font-family: 'Lato-Bold'; font-size: 23px;" asp-area="" asp-page="/Order">Order</a>
                         </li>
-                        <li class="nav-item" style="border-bottom: 4px solid #005117; --hover-color:#005117;">
-                            <a class="nav-link text-dark" style="font-family: 'Lato-Bold'; font-size: 23px;" asp-area="Identity" asp-page="/Account/Login">Admin Login</a>
-                        </li>
                     </ul>
+                    <div class="ms-auto d-flex align-items-center">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="dropdown">
+                                <button class="btn btn-blue dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    style="font-family: 'Lato-Bold'; font-size: 18px;">
+                                    @User.Identity.Name
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-pages="/Seeds/Index">
+                                            Manage Inventory
+                                            </a>
+                                        </li>
+                                    }
+
+                                    <li>
+                                        <form method="post"
+                                                asp-area="Identity"
+                                                asp-page="/Account/Logout">
+                                            <button type="submit" class="dropdown-item">
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else{
+                            <a class="btn btn-outline-dark"
+                            asp-area="Identity"
+                            asp-page="/Account/Login"
+                            style="fpmt-family: 'Lato-Bold'; font-size: 18;">
+                            Log In</a>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>

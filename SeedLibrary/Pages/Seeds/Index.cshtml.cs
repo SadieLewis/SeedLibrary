@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SeedLibrary.Data;
 using SeedLibrary.Models;
 
-namespace SeedLibrary.Pages.Seeds
+namespace SeedLibrary.Pages_Seeds
 {
     public class IndexModel : PageModel
     {
-        private readonly SeedLibrary.Data.SeedContext _context;
+        private readonly SeedContext _context;
         private readonly IConfiguration Configuration;
 
         public IndexModel(SeedContext context, IConfiguration configuration)
@@ -21,18 +16,22 @@ namespace SeedLibrary.Pages.Seeds
             _context = context;
             Configuration = configuration;
         }
-        public string NameSort { get; set; }
+
+        public string VarietySort { get; set; }
+        public string CommonNameSort { get; set; }
         public string YearSort { get; set; }
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
-        public PaginatedList<Seed> Seeds { get;set; } = default!;
 
-        public async Task OnGetAsync(string sortOrder,
-            string currentFilter, string searchString, int? pageIndex)
+        public PaginatedList<SeedPacket> SeedPacket { get; set; } = default!;
+
+        public async Task OnGetAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex)
         {
             CurrentSort = sortOrder;
-            NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            VarietySort = sortOrder == "Variety" ? "variety_desc" : "Variety";
+            CommonNameSort = sortOrder == "CommonName" ? "commonname_desc" : "CommonName";
             YearSort = sortOrder == "Year" ? "year_desc" : "Year";
+
             if (searchString != null)
             {
                 pageIndex = 1;
@@ -44,31 +43,58 @@ namespace SeedLibrary.Pages.Seeds
 
             CurrentFilter = searchString;
 
-            IQueryable<Seed> seedsIQ = from s in _context.Seeds select s;
+            IQueryable<SeedPacket> seedIQ = _context.SeedPackets
+                .Include(s => s.Variety)
+                    .ThenInclude(v => v.CommonName)
+                .Include(s => s.Donations)
+                    .ThenInclude(d => d.Source)
+                .Include(s => s.Growings)
+                    .ThenInclude(g => g.PlantingDate);
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
-                seedsIQ = seedsIQ.Where(s => s.Name.Contains(searchString)
-                                    || s.Variety.Contains(searchString));
+                seedIQ = seedIQ.Where(s =>
+                    s.Note.Contains(searchString) ||
+                    s.Variety.VarietyName.Contains(searchString) ||
+                    s.Variety.CommonName.Name.Contains(searchString) ||
+                    s.Donations.Any(d => d.Source.SourceName.Contains(searchString)) ||
+                    s.Donations.Any(d => d.Year.ToString().Contains(searchString)));
             }
+
             switch (sortOrder)
             {
-                case "name_desc":
-                    seedsIQ = seedsIQ.OrderByDescending(s => s.Name);
+                case "count_desc":
+                    seedIQ = seedIQ.OrderByDescending(s => s.Count);
+                    break;
+                case "Variety":
+                    seedIQ = seedIQ.OrderBy(s => s.Variety.VarietyName);
+                    break;
+                case "variety_desc":
+                    seedIQ = seedIQ.OrderByDescending(s => s.Variety.VarietyName);
+                    break;
+                case "CommonName":
+                    seedIQ = seedIQ.OrderBy(s => s.Variety.CommonName.Name);
+                    break;
+                case "commonname_desc":
+                    seedIQ = seedIQ.OrderByDescending(s => s.Variety.CommonName.Name);
                     break;
                 case "Year":
-                    seedsIQ = seedsIQ.OrderBy(s => s.Year);
+                    seedIQ = seedIQ.OrderBy(s => s.Donations.Min(d => d.Year));
                     break;
-                case "Year_desc":
-                    seedsIQ = seedsIQ.OrderByDescending(s => s.Year);
+                case "year_desc":
+                    seedIQ = seedIQ.OrderByDescending(s => s.Donations.Max(d => d.Year));
                     break;
                 default:
-                    seedsIQ = seedsIQ.OrderBy(s => s.Name);
+                    seedIQ = seedIQ.OrderBy(s => s.Variety.CommonName.Name);
                     break;
             }
 
             var pageSize = Configuration.GetValue("PageSize", 4);
-            Seeds = await PaginatedList<Seed>.CreateAsync(seedsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
+
+            SeedPacket = await PaginatedList<SeedPacket>.CreateAsync(
+                seedIQ.AsNoTracking(),
+                pageIndex ?? 1,
+                pageSize);
         }
     }
 }
