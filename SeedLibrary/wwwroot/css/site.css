@@ -8,34 +8,101 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
 html {
   position: relative;
   min-height: 100%;
 }
 
-/*#content{
-    padding-right: 3vh;
-    border-top: 3vh solid #F46E15;
-    padding: 2vh;
-    margin-right: 2vh;
+button{
+    padding-top: 1vh;
+    padding-bottom:1vh;
+}
 
-} */
+body {
+  margin-bottom: 60px;
+}
 
-#imagecar{
-    border: 5px solid #F46E15;;
+
+/* =========================
+   Classes
+========================= */
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+.borderedcontainer{
+    border: 5px solid #337ab7;
     padding: 2vh;
+}
+
+.cardspotlight{
+    border: 5px solid #8BC441;
+    padding: 2vh;
+    margin-bottom: 2vh;
+    margin-right:2vh;
+}
+
+.card{
+    border-radius: 0%;
 }
 
 .row{
     padding: 2vh;
 }
 
+
+/* =========================
+   IDs
+========================= */
+
+#imagecar{
+    border: 5px solid #F46E15;;
+    padding: 2vh;
+}
+
+#backto{
+  color:white;
+}
+
+#backto:hover{
+  color:black;
+}
+
 #inseasonsquare{
     border-color: #AAD373;
+}
+
+#info{
+    color:white;
+    background-color: #005117;
+    text-decoration: none;
+}
+
+#info:hover{
+    color: white;
+    background-color: #AAD373;
+}
+
+
+/* =========================
+   Headers
+========================= */
+
+h1{
+  padding: 2vh;
+  font-family: 'Lato-Bold'; 
+  font-size: 50px;
+  padding-right: 3vh;
 }
 
 h2 {
@@ -53,66 +120,6 @@ h3 {
     border-bottom: 3vh solid #F46E15;
 }
 
-#info{
-    color:white;
-    background-color: #005117;
-    text-decoration: none;
-}
-
-#info:hover{
-    color: white;
-    background-color: #AAD373;
-}
-
-button{
-    padding-top: 1vh;
-    padding-bottom:1vh;
-}
-
-.card{
-    border-radius: 0%;
-}
-
-.borderedcontainer{
-    border: 5px solid #337ab7;
-    padding: 2vh;
-}
-
-.cardspotlight{
-    border: 5px solid #8BC441;
-    padding: 2vh;
-    margin-bottom: 2vh;
-    margin-right:2vh;
-}
-
-body {
-  margin-bottom: 60px;
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
-}
-
-
-#backto{
-  color:white;
-}
-
-#backto:hover{
-  color:black;
-}
-
-h1{
-  padding: 2vh;
-  font-family: 'Lato-Bold'; 
-  font-size: 50px;
-  padding-right: 3vh;
-}
 
 /* =========================
    Buttons
@@ -202,6 +209,7 @@ h1{
     --bs-btn-disabled-bg: #7F0C0F;
     --bs-btn-disabled-border-color: #7F0C0F;
 }
+
 
 /* =========================
    Transition Buttons
